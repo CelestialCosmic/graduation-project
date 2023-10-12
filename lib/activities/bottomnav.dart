@@ -28,11 +28,11 @@ class _BottomNavState extends State<BottomNav>{
               items: const [
               BottomNavigationBarItem(
               icon:  Icon(Icons.home),
-              label:  "首页",
+              label:  "文章",
               ),
               BottomNavigationBarItem(
               icon:  Icon(Icons.home),
-              label:  "星标",
+              label:  "订阅源",
               ),
             ],
             ),
