@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
 
-class rssfeed {}
+class FeedArticle extends StatelessWidget {
+  var feedImgurl = "no icon";
+  var feedTitle = "default title";
+  var feedSubtitle = "default subtitle";
+  Widget build(BuildContext context){
+    return ListView(
+      children:<Widget> [
+          ListTile(
+            leading: Image.network(feedImgurl),
+            title: Text(feedTitle),
+            subtitle: Text(feedSubtitle),
+          )
+        ],
+    );
+  }
+}
 
 class NewsBlock extends StatelessWidget {
   List<Widget> _initList() {
@@ -55,6 +70,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return NewsBlock();
+    return FeedArticle();
   }
 }
