@@ -1,29 +1,6 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-
-_addFeedDialog(BuildContext context) {
-  AlertDialog noto = AlertDialog(
-      title: const Text("添加订阅源"),
-      content:
-      Row(children: [
-          TextField(
-              decoration: InputDecoration(
-              hintText: "输入订阅源 url",
-              border: OutlineInputBorder(),
-            )),
-          ElevatedButton(
-            child: const Text("添加"),
-            onPressed: () => print("Pressed"),
-          )
-      ]
-          )
-          );
-
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return noto;
-      });
-}
 
 class Star extends StatefulWidget {
   @override
@@ -34,13 +11,31 @@ class Star extends StatefulWidget {
 class _StarState extends State<Star> {
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-        right: MediaQuery.of(context).size.width / 2 + 100,
-        top: MediaQuery.of(context).size.height / 2,
-        child:
+    return 
           FloatingActionButton(
             onPressed: () {
-          _addFeedDialog(context);
-          }));
+              showDialog(context: context, builder:(context) 
+              {
+                return const AlertDialog(
+                  title:Text("添加订阅源"),
+                  content: Row(
+                    children: [
+                      SizedBox(
+                        height: 40,
+                        width: 200,
+                        child: 
+                      TextField(
+                        maxLines: 1,
+                      ),
+                      ),
+                      Padding(padding: EdgeInsets.all(5.0)),
+                      ElevatedButton(onPressed:null,
+                      child: Text("添加")), 
+                    ],
+                  ),
+
+                );
+              });
+          });
   }
 }
