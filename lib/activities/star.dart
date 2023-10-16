@@ -20,42 +20,41 @@ class RssStorage {
 }
 
 List<Widget> _newsBlock() {
-    List<Widget> list = [];
-    for (var i = 0; i < RssStorage.urlList.length; i++) {
-      list.add(
-        Container(
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              color: Color.fromARGB(255, 233, 33, 33)),
-          padding: const EdgeInsets.all(5),
-          margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
-          height: 120,
-          child: Column(children: [
-            const Expanded(
-                child: Text(
-              "title",
-              maxLines: 1,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            )),
-            Row(children: [
-              const Expanded(child: Text("123")),
-              SizedBox(
-                height: 80,
-                width: 80,
-                child: Image.network(
-                    "https://cdn.sstatic.net/Img/teams/teams-illo-free-sidebar-promo.svg?v=47faa659a05e"),
-              )
-            ]),
+  List<Widget> list = [];
+  for (var i = 0; i < RssStorage.urlList.length; i++) {
+    list.add(
+      Container(
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            color: Color.fromARGB(255, 233, 33, 33)),
+        padding: const EdgeInsets.all(5),
+        margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
+        height: 120,
+        child: Column(children: [
+          const Expanded(
+              child: Text(
+            "title",
+            maxLines: 1,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          )),
+          Row(children: [
+            const Expanded(child: Text("123")),
+            SizedBox(
+              height: 80,
+              width: 80,
+              child: Image.network(
+                  "https://cdn.sstatic.net/Img/teams/teams-illo-free-sidebar-promo.svg?v=47faa659a05e"),
+            )
           ]),
-        ),
-      );
-    }
-    return list;
+        ]),
+      ),
+    );
   }
+  return list;
+}
 
 _addFeedButton(context) {
-  return
-  Stack(
+  return Stack(
     children: [
       Align(
           alignment: Alignment.bottomRight,
@@ -83,8 +82,21 @@ _addFeedButton(context) {
                                 ),
                               ),
                               const Padding(padding: EdgeInsets.all(5.0)),
-                              const ElevatedButton(
-                                  onPressed: null, child: Text("添加")),
+                              ElevatedButton(
+                                child: const Text("添加"),
+                                onPressed: () {
+                                  if (rssController.text.isEmpty) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const AlertDialog(
+                                            title: Text("提示"),
+                                            content: Text("不能为空！"),
+                                          );
+                                        });
+                                  }
+                                },
+                              ),
                             ],
                           ),
                         );
@@ -103,15 +115,8 @@ class Star extends StatefulWidget {
 class _StarState extends State<Star> {
   @override
   Widget build(BuildContext context) {
-    return 
-      Stack(
-        children: [
-          ListView(
-            children:_newsBlock()
-          ),
-          _addFeedButton(context)
-        ],
-      );
-      
+    return Stack(
+      children: [ListView(children: _newsBlock()), _addFeedButton(context)],
+    );
   }
 }
