@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-TextEditingController rssController = TextEditingController();
+TextEditingController rssUrlController = TextEditingController();
+TextEditingController rssNameController = TextEditingController();
 
 class RssStorage {
-  static const urlList = [
+  List urlList = [
     "feed1",
     "feed2",
     "feed2",
@@ -17,11 +19,30 @@ class RssStorage {
     "feed2",
     "feed2",
   ];
+  static write(feedName, feedUrl) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(feedName, feedUrl);
+  }
+
+  static load() async {
+    final prefs = await SharedPreferences.getInstance();
+    final keys = prefs.getKeys();
+    final prefsMap = Map<String, String>();
+    for (String key in keys){
+      prefsMap[key] = prefs.get(key).toString();
+    }
+    prefsMap.forEach((key, value) { 
+    });
+    return;
+  }
 }
 
 List<Widget> _newsBlock() {
   List<Widget> list = [];
-  for (var i = 0; i < RssStorage.urlList.length; i++) {
+  final prefsMap = RssStorage.load();
+  prefsMap.forEach(
+    (key,value)
+   {
     list.add(
       Container(
         decoration: const BoxDecoration(
@@ -31,14 +52,14 @@ List<Widget> _newsBlock() {
         margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
         height: 120,
         child: Column(children: [
-          const Expanded(
+          Expanded(
               child: Text(
-            "title",
+            key,
             maxLines: 1,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           )),
           Row(children: [
-            const Expanded(child: Text("123")),
+            Expanded(child: Text(value)),
             SizedBox(
               height: 80,
               width: 80,
@@ -49,7 +70,7 @@ List<Widget> _newsBlock() {
         ]),
       ),
     );
-  }
+  });
   return list;
 }
 
@@ -59,7 +80,7 @@ _addFeedButton(context) {
       Align(
           alignment: Alignment.bottomRight,
           child: Padding(
-            padding: EdgeInsets.all(35.0),
+            padding: const EdgeInsets.all(35.0),
             child: FloatingActionButton(
                 child: const Icon(Icons.add),
                 onPressed: () {
@@ -68,16 +89,23 @@ _addFeedButton(context) {
                       builder: (context) {
                         return AlertDialog(
                           title: const Text("添加订阅源"),
-                          content: Row(
+                          content: Column(
                             children: [
                               SizedBox(
-                                height: 40,
-                                width: 200,
                                 child: TextField(
-                                  controller: rssController,
+                                  controller: rssNameController,
                                   maxLines: 1,
                                   decoration: const InputDecoration(
-                                    hintText: '输入网站的rssurl',
+                                    hintText: '名字',
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                child: TextField(
+                                  controller: rssUrlController,
+                                  maxLines: 1,
+                                  decoration: const InputDecoration(
+                                    hintText: '网站的rssurl',
                                   ),
                                 ),
                               ),
@@ -85,13 +113,24 @@ _addFeedButton(context) {
                               ElevatedButton(
                                 child: const Text("添加"),
                                 onPressed: () {
-                                  if (rssController.text.isEmpty) {
+                                  if (rssUrlController.text.isEmpty) {
                                     showDialog(
                                         context: context,
                                         builder: (context) {
                                           return const AlertDialog(
                                             title: Text("提示"),
                                             content: Text("不能为空！"),
+                                          );
+                                        });
+                                  } else {
+                                    RssStorage.write(rssNameController.text,
+                                        rssUrlController.text);
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const AlertDialog(
+                                            title: Text("提示"),
+                                            content: Text("添加成功！"),
                                           );
                                         });
                                   }
