@@ -54,7 +54,6 @@ class NewsBlock extends StatelessWidget {
 
   const NewsBlock({super.key});
   Widget build(BuildContext context) {
-    String _title = "default";
     return ListView(
       children: _initList(),
     );

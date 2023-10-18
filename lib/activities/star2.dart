@@ -1,69 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import './storage.dart';
 
 TextEditingController rssUrlController = TextEditingController();
 TextEditingController rssNameController = TextEditingController();
-
-class _RssStorageState {
-  static write(feedName, feedUrl) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(feedName, feedUrl);
-  }
-
-  static delete(feedName) async {}
-
-  static Future<List<Widget>> load() async {
-    final prefs = await SharedPreferences.getInstance();
-    final keys = prefs.getKeys();
-    List<Widget> tiles = [];
-    // final prefsMap = Map<String, String>();
-    // prefsMap[key] = prefs.get(key).toString();
-    for (String key in keys) {
-      String value = prefs.getString(key) as String;
-      tiles.add(Container(
-        height: 60,
-        decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            color: Color.fromARGB(255, 233, 33, 33)),
-        padding: const EdgeInsets.all(5),
-        margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
-        child: Column(children: [
-          Expanded(
-              child: Text(
-            key,
-            maxLines: 1,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          )),
-          Row(children: [
-            Expanded(child: Text(value)),
-            SizedBox(
-              child: ElevatedButton(
-                child: Icon(Icons.delete),
-                onPressed: () {},
-              ),
-            )
-          ]),
-        ]),
-      ));
-      print("load funtion: ${value}");
-    }
-    return tiles;
-  }
-
-  static loadkey() async {
-    final prefs = await SharedPreferences.getInstance();
-    final keys = prefs.getKeys();
-    return keys;
-  }
-
-  static loadvalue() async {
-    final prefs = await SharedPreferences.getInstance();
-    final keys = prefs.getKeys();
-    for (String key in keys) {
-      prefs.get(key);
-    }
-  }
-}
 
 class Star extends StatefulWidget {
   const Star({super.key});
@@ -71,38 +11,6 @@ class Star extends StatefulWidget {
 }
 
 class _StarState extends State<Star> {
-  // Widget rssBook(name, url) {
-  //   return Container(
-  //     height: 60,
-  //     decoration: const BoxDecoration(
-  //         borderRadius: BorderRadius.all(Radius.circular(20)),
-  //         color: Color.fromARGB(255, 233, 33, 33)),
-  //     padding: const EdgeInsets.all(5),
-  //     margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
-  //     child: Column(children: [
-  //       Expanded(
-  //           child: Text(
-  //         name,
-  //         maxLines: 1,
-  //         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-  //       )),
-  //       Row(children: [
-  //         Expanded(child: Text(url)),
-  //         SizedBox(
-  //           child: ElevatedButton(
-  //             child: Icon(Icons.delete),
-  //             onPressed: () {},
-  //           ),
-  //         )
-  //       ]),
-  //     ]),
-  //   );
-  // }
-
-  void _addNew(Widget x) {}
-
-  void _removeSelected(Widget x) {}
-
   _addFeedButton(context) {
     return Stack(
       children: [
@@ -152,8 +60,8 @@ class _StarState extends State<Star> {
                                             );
                                           });
                                     } else {
-                                      _RssStorageState.write(
-                                          rssNameController.text,
+                                      var instance = SharedPref();
+                                      instance.save(rssNameController.text,
                                           rssUrlController.text);
                                       showDialog(
                                           context: context,
@@ -175,14 +83,31 @@ class _StarState extends State<Star> {
       ],
     );
   }
-  _readtile() async{
-    await _RssStorageState.load();
+
+  _wait() async {
+    var i = SharedPref();
+    final values = await i.loadWidget();
+    return values;
   }
+
+  _future(context) {
+    return FutureBuilder(
+        future: _wait(),
+        builder: (context,snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Text(snapshot.data.toString());
+          }
+          else return Text("loading");
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
-    _RssStorageState.load();
+    List tiles = [];
+
     return Stack(children: [
-      ListView(children: _readtile()),
+      // _wait(),
+      _future(context),
       _addFeedButton(context),
     ]);
   }

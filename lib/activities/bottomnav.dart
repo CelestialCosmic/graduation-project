@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './home.dart';
-import './star.dart';
+import './star2.dart';
 class BottomNav extends StatefulWidget{
   const BottomNav({super.key});
   @override
@@ -8,7 +8,7 @@ class BottomNav extends StatefulWidget{
 }
 
 class _BottomNavState extends State<BottomNav>{
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   final List<Widget> _activities= const[
     Home(),
     Star()

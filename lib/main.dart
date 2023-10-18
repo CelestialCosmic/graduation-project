@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import './activities/bottomnav.dart';
-// import './activities/home.dart';
-// import './activities/star.dart';
 void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
