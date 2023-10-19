@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPref {
-  read(String key) async {
+  readValue(key) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(key);
+    String value = prefs.getString(key).toString();
+    return value;
   }
 
   save(String key, value) async {
@@ -16,7 +17,7 @@ class SharedPref {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(key);
   }
-  loadWidget() async{
+  readkeys() async{
     List<String> tiles = [];
     final prefs = await SharedPreferences.getInstance();
     for (String key in prefs.getKeys()){

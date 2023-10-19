@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
 import './storage.dart';
 
 TextEditingController rssUrlController = TextEditingController();
@@ -84,30 +84,39 @@ class _StarState extends State<Star> {
     );
   }
 
-  _wait() async {
-    var i = SharedPref();
-    final values = await i.loadWidget();
+  _waitValue() async {
+    var storage = SharedPref();
+    List<String> values = [];
+    values = await storage.readkeys();
     return values;
   }
 
-  _future(context) {
-    return FutureBuilder(
-        future: _wait(),
-        builder: (context,snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Text(snapshot.data.toString());
-          }
-          else return Text("loading");
-        });
+  List<Widget> _waitName() {
+    var storage = SharedPref();
+    List<String> names = [];
+    List<String> values = [];
+    List<Widget> tiles = [];
+    storage.readkeys().then((j) {
+      for (String name in j) {
+        String value = "";
+        storage.readValue(name).then((z) => value = z);
+        tiles.add(FutureBuilder(
+            future: _waitValue(),
+            builder: (context, snapshot) {
+              return ListTile(title: Text(name), subtitle: Text(value));
+            }));
+      }
+    });
+    return tiles;
   }
 
   @override
   Widget build(BuildContext context) {
-    List tiles = [];
-
+    List<Widget> feedUrls = [];
+    feedUrls = _waitName();
+    print(feedUrls);
     return Stack(children: [
-      // _wait(),
-      _future(context),
+      ListView(children: _waitName()),
       _addFeedButton(context),
     ]);
   }
