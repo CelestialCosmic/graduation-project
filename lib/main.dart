@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget{
 
 class MyAppState extends State<MyApp> {
   @override
-  int _currentIndex = 1;
+  int _currentIndex = 0;
   PageController contorller = PageController();
   List<Widget> children = [];
   @override
@@ -24,10 +24,10 @@ class MyAppState extends State<MyApp> {
           body: PageView(
             controller: contorller,
             children: const [
-              // Pagemain(),
-              // Pagestar(),
-              Text("2"),
-              Text("3")
+              Pagemain(),
+              Pagestar(),
+              // Text("2"),
+              // Text("3")
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
