@@ -14,24 +14,31 @@ class Xml {
     final neet = Network();
     var rawxml = await neet.get(url);
     AtomFeed feed = AtomFeed.parse(rawxml);
+    print(feed);
     return feed;
   }
 
-  List<Widget> resolvefeed() {
-    var feed;
+  Widget resolvefeed() {
     List<Widget> list = [];
-    list.add(FutureBuilder(
+
+    Widget a;
+    a = FutureBuilder(
         future: sendrequest(),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.data != null) {
-            return ListTile(
-              title: Text(snapshot.data.title.toString()),
-              subtitle: Text(snapshot.data.links.first.toString()),
+            for (AtomItem item in snapshot.data.items) {
+              list.add(ListTile(
+                title: Text(item.title.toString()),
+                subtitle: Text(item.links.first.href.toString()),
+              ));
+            }
+            return ListView(
+              children: list,
             );
           } else {
-            return const Padding(padding: EdgeInsets.zero);
+            return const Center(child:Row(children:[Text("loading..."),Icon(Icons.blur_circular_sharp)]));
           }
-        }));
-    return list;
+        });
+    return a;
   }
 }

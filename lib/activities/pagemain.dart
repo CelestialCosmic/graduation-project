@@ -8,24 +8,22 @@ class NewsBlock extends StatelessWidget {
     return ListTile();
   }
 
-  List<Widget> _initList() {
+  Widget _initList() {
     String url;
     final x = Xml();
-    List<Widget> list = [];
+    Widget list;
     list = x.resolvefeed();
-    list.add(
-    ListTile(
-      title: Text("3"),
-      subtitle: Text("1"),
-    ));
+    // list.add(
+    // ListTile(
+    //   title: Text("3"),
+    //   subtitle: Text("1"),
+    // ));
     return list;
   }
 
   const NewsBlock({super.key});
   Widget build(BuildContext context) {
-    return ListView(
-      children: _initList(),
-    );
+    return Container(child: _initList());
   }
 }
 
