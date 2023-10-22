@@ -26,8 +26,6 @@ class MyAppState extends State<MyApp> {
             children: const [
               Pagemain(),
               Pagestar(),
-              // Text("2"),
-              // Text("3")
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(

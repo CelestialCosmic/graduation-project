@@ -8,8 +8,9 @@ class ShowFeedUrls extends StatefulWidget {
 
 class ShowFeedUrlsState extends State<ShowFeedUrls>
     with AutomaticKeepAliveClientMixin {
-  bool get wantKeepAlive => false;
+  bool get wantKeepAlive => true;
   List<Widget> tiles = [];
+  var doneflag = 0;
   _waitValue() async {
     var storage = SharedPref();
     List<String> values = [];
@@ -20,22 +21,37 @@ class ShowFeedUrlsState extends State<ShowFeedUrls>
   List<Widget> _waitName() {
     var storage = SharedPref();
     storage.readkeys().then((j) {
-      for (String name in j) {
-        String value = "";
-        storage.readValue(name).then((z) => value = z);
-        print(value);
-        print(name);
-        tiles.add(FutureBuilder(
-            future: _waitValue(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: Text("loading"));
-              } else if (snapshot.connectionState == ConnectionState.done) {
-                return ListTile(title: Text(name), subtitle: Text(value));
-              } else {
-                return const Center(child: Text("loading"));
-              }
-            }));
+      print(j);
+      if (doneflag == tiles.length) {
+        for (String name in j) {
+          String value = "";
+          storage.readValue(name).then((z) => value = z);
+          tiles.add(FutureBuilder(
+              future: _waitValue(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: Text("loading"));
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  return ListTile(
+                    title: Row(children: [
+                      Padding(padding: EdgeInsets.fromLTRB(60, 0, 0, 0)),
+                      Text(name)
+                    ]),
+                    subtitle: Row(children: [
+                      ElevatedButton(
+                        child: Icon(Icons.delete),
+                        onPressed: () {
+                          storage.remove(name);
+                        },
+                      ),
+                      Text(value)
+                    ]),
+                  );
+                } else {
+                  return const Center(child: Text("loading"));
+                }
+              }));
+        }
       }
     });
     return tiles;
@@ -43,12 +59,14 @@ class ShowFeedUrlsState extends State<ShowFeedUrls>
 
   @override
   Widget build(BuildContext context) {
-    return 
-        ListView(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          children: _waitName(),
-        );
+    print(doneflag);
+    tiles = _waitName();
+    print(tiles);
+    return ListView(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      children: tiles,
+    );
   }
 }
 
@@ -137,21 +155,19 @@ class Pagestar extends StatefulWidget {
 
 class PagestarState extends State<Pagestar> {
   Widget build(BuildContext context) {
-    return const 
-    SingleChildScrollView(
+    return const SingleChildScrollView(
         scrollDirection: Axis.vertical,
         physics: ScrollPhysics(),
-        child:
-    Column(
-      children: [
-        ShowFeedUrls(),
-        Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.all(35.0),
-              child: FeedButton(),
-            ))
-      ],
-    ));
+        child: Column(
+          children: [
+            ShowFeedUrls(),
+            Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(35.0),
+                  child: FeedButton(),
+                ))
+          ],
+        ));
   }
 }
