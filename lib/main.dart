@@ -22,6 +22,9 @@ class MyAppState extends State<MyApp> {
             AppBar(
                 title: const Row(children: [
               FeedButton(),
+              SizedBox(
+                width: 20,
+              ),
               Text("网安2001 欧鑫奕"),
             ])),
             OutlinedButton(onPressed: null, child: Text("全部内容")),

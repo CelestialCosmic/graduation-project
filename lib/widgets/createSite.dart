@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterrss/activities/pageFeeds.dart';
 import 'dart:convert';
-import '../widgets/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ShowSite extends StatefulWidget {
@@ -16,7 +16,7 @@ class ShowSiteState extends State<ShowSite> {
     return keys;
   }
 
-  void remove(name) async {
+  remove(name) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(name);
   }
@@ -36,25 +36,35 @@ class ShowSiteState extends State<ShowSite> {
         var keyList =
             keyListmid.substring(2, keyListmid.length - 2).replaceAll(" ", "");
         var keyList2 = (keyList.split(','));
-        print(keyList2);
-        print(keyList2.runtimeType);
         List<Widget> tiles = [];
         if (keyList2.toString() == "[]") {
           tiles.add(const Center(child: Text("没有订阅，点击左上角添加")));
         } else {
           for (var name in keyList2) {
+            String url = "url";
             tiles.add(ListTile(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ShowFeeds(
+                        name: name,
+                      ),
+                    ));
+              },
               title: Row(children: [
                 Text(name),
+                const Spacer(),
                 Align(
                     alignment: const Alignment(1.0, 0.0),
                     child: OutlinedButton(
-                        // onPressed: null,
                         onPressed: () => remove(name),
                         child: const Icon(Icons.delete))),
               ]),
-              // onTap: ,
-            ));
+              // )
+            )
+                // }
+                );
           }
         }
         return Column(
