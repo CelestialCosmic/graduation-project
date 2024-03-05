@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import '../widgets/storage.dart';
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ShowSite extends StatefulWidget {
   const ShowSite({super.key});
@@ -8,55 +9,39 @@ class ShowSite extends StatefulWidget {
 }
 
 class ShowSiteState extends State<ShowSite> {
-  @override
-  var storage = SharedPref();
-  _waitValue() async {
-    List<String> values = [];
-    values = await storage.readkeys();
-    return values;
+  List<Widget> tiles = [];
+  keys() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> keys = prefs.getKeys().toList();
+    return keys;
   }
-
-  _waitUrl(String name) {
-    String url = storage.readValue(name);
-    return url;
-  }
-
-  static List<Widget> a = [
-    Text("1"),
-    Text("1"),
-    Text("1"),
-    Text("1"),
-    Text("1"),
-    Text("1"),
-    Text("1"),
-    Text("1"),
-    Text("1"),
-  ];
 
   Widget build(BuildContext context) {
+    List<String> names = [];
     List<Widget> tiles = [];
-    tiles.add(
-      FutureBuilder(
-        future: _waitValue(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            _waitValue().then((values) {
-              for (String name in values) {
-                tiles.add(Column(
-                  children: [Text(name)],
-                ));
-                // return const Text("nomore");
-              }
-            });
-          } else if (!snapshot.hasData) {
-            // return const Text("nomore");
-          }
-          // return const Text("nomore");
-        },
-      ),
-    );
-    return ListView(
-      children: tiles,
+    for (String name in names) {
+      tiles.add(ListTile(
+        title: Text(name),
+      ));
+    }
+    return FutureBuilder(
+      future: keys(),
+      builder: (context, snapshot) {
+        String keyListmid = jsonEncode(snapshot.data.toString());
+        var keyList =
+            keyListmid.substring(2, keyListmid.length - 2).replaceAll(" ", "");
+        var keyList2 = (keyList.split(','));
+        List<Widget> tiles = [];
+        for (var name in keyList2) {
+          tiles.add(ListTile(
+            title: Text(name),
+            // onTap: ,
+          ));
+        }
+        return Column(
+          children: tiles,
+        );
+      },
     );
   }
 }

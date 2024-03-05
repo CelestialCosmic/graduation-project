@@ -12,14 +12,20 @@ class SharedPref {
     prefs.setString(key, value);
   }
 
+  clear() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
+
   remove(String key) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(key);
   }
-  readkeys() async{
-    List<String> tiles = [];
+
+  readkeys() async {
     final prefs = await SharedPreferences.getInstance();
-    for (String key in prefs.getKeys()){
+    List<String> tiles = [];
+    for (String key in prefs.getKeys()) {
       tiles.add(key);
     }
     return tiles;
