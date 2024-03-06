@@ -1,8 +1,9 @@
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterrss/activities/FeedReader.dart';
 import 'package:flutterrss/widgets/feedResolver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutterrss/widgets/xmlresolve.dart';
+import 'package:flutterrss/activities/pageFeeds.dart';
 
 class ShowFeeds extends StatelessWidget {
   feedUrl(key) async {
@@ -43,34 +44,51 @@ class ShowFeeds extends StatelessWidget {
                       if (snapshot.hasData) {
                         for (AtomItem item in snapshot.data.items) {
                           String authors = "";
+                          String url = "";
+                          url = item.links.first.href.toString();
                           if (item.authors.length != 0) {
                             for (var author in item.authors) {
-                              authors = author.name.toString() + " ";
-                              print(author.name);
+                              authors = "${author.name} ";
                             }
                           } else {
                             authors = "no author";
                           }
                           tiles.add(ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FeedDetail(
+                                              text: item.content.toString(),
+                                              title: name,
+                                              url: url,
+                                            )));
+                              },
                               title: Column(
-                            children: [
-                              Row(
                                 children: [
-                                  Text(item.title.toString()),
-                                  const Spacer(
-                                    flex: 1,
+                                  Row(
+                                    children: [
+                                      Text(item.title.toString()),
+                                      const Spacer(
+                                        flex: 1,
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(authors),
+                                      const SizedBox(width: 20),
+                                      Flexible(
+                                          child: Text(
+                                        url,
+                                        overflow: TextOverflow.fade,
+                                        maxLines: 1,
+                                        softWrap: false,
+                                      ))
+                                    ],
                                   )
                                 ],
-                              ),
-                              Row(
-                                children: [
-                                  Text(authors),
-                                  const SizedBox(width: 20),
-                                  Text(item.links.first.href.toString())
-                                ],
-                              )
-                            ],
-                          )));
+                              )));
                         }
                       }
                       return ListView(
