@@ -166,7 +166,7 @@ class PagestarState extends State<Pagestar> {
             Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
-                  padding: const EdgeInsets.all(35.0),
+                  padding: EdgeInsets.all(35.0),
                   child: FeedButton(),
                 ))
           ],

@@ -38,7 +38,9 @@ class ShowSiteState extends State<ShowSite> {
         var keyList2 = (keyList.split(','));
         List<Widget> tiles = [];
         if (keyList2.toString() == "[]") {
-          tiles.add(const Center(child: Text("没有订阅，点击左上角添加")));
+          tiles.add(const Center(
+              child:
+                  Text("no subscription,tap button on top-left to add one")));
         } else {
           for (var name in keyList2) {
             tiles.add(ListTile(
@@ -46,7 +48,7 @@ class ShowSiteState extends State<ShowSite> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ShowFeeds(
+                      builder: (context) => PageFrame(
                         name: name,
                       ),
                     ));
@@ -63,10 +65,7 @@ class ShowSiteState extends State<ShowSite> {
                         },
                         child: const Icon(Icons.delete))),
               ]),
-              // )
-            )
-                // }
-                );
+            ));
           }
         }
         return Column(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'widgets/addFeed.dart';
 import 'widgets/ShowSite.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -17,6 +17,7 @@ class MyAppState extends State<MyApp> {
 
   PageController contorller = PageController();
   List<Widget> children = [];
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(fontFamily: 'notosans'),
@@ -34,6 +35,7 @@ class MyAppState extends State<MyApp> {
               const Text("网安2001 欧鑫奕"),
             ])),
             // OutlinedButton(onPressed: null, child: Text("全部内容")),
+            // ignore: prefer_const_constructors
             ShowSite()
           ]),
         )));
