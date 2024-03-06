@@ -45,8 +45,11 @@ class ShowFeeds extends StatelessWidget {
                         for (AtomItem item in snapshot.data.items) {
                           String authors = "";
                           String url = "";
+                          String title = "";
+                          String a = item.updated.toString();
+                          title = item.title.toString();
                           url = item.links.first.href.toString();
-                          if (item.authors.length != 0) {
+                          if (item.authors.isNotEmpty) {
                             for (var author in item.authors) {
                               authors = "${author.name} ";
                             }
@@ -60,7 +63,7 @@ class ShowFeeds extends StatelessWidget {
                                     MaterialPageRoute(
                                         builder: (context) => FeedDetail(
                                               text: item.content.toString(),
-                                              title: name,
+                                              title: title,
                                               url: url,
                                             )));
                               },
@@ -68,9 +71,15 @@ class ShowFeeds extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Text(item.title.toString()),
-                                      const Spacer(
-                                        flex: 1,
+                                      Flexible(
+                                          child: Text(
+                                        title,
+                                        overflow: TextOverflow.clip,
+                                        maxLines: 2,
+                                        softWrap: true,
+                                      )),
+                                      const SizedBox(
+                                        width: 10,
                                       )
                                     ],
                                   ),
@@ -80,7 +89,7 @@ class ShowFeeds extends StatelessWidget {
                                       const SizedBox(width: 20),
                                       Flexible(
                                           child: Text(
-                                        url,
+                                        a,
                                         overflow: TextOverflow.fade,
                                         maxLines: 1,
                                         softWrap: false,

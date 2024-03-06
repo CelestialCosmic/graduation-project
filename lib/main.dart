@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'widgets/addFeed.dart';
-import 'widgets/createSite.dart';
+import 'widgets/ShowSite.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,6 +11,10 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+  refreshState() {
+    setState(() {});
+  }
+
   PageController contorller = PageController();
   List<Widget> children = [];
   Widget build(BuildContext context) {
@@ -20,14 +24,16 @@ class MyAppState extends State<MyApp> {
             body: Center(
           child: Column(children: [
             AppBar(
-                title: const Row(children: [
-              FeedButton(),
-              SizedBox(
+                title: Row(children: [
+              FeedButton(
+                refresh: refreshState,
+              ),
+              const SizedBox(
                 width: 20,
               ),
-              Text("网安2001 欧鑫奕"),
+              const Text("网安2001 欧鑫奕"),
             ])),
-            OutlinedButton(onPressed: null, child: Text("全部内容")),
+            // OutlinedButton(onPressed: null, child: Text("全部内容")),
             ShowSite()
           ]),
         )));

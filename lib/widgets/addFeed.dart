@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import './storage.dart';
 
 class FeedButton extends StatefulWidget {
-  const FeedButton({super.key});
+  @override
+  final Function() refresh;
+  const FeedButton({
+    super.key,
+    required this.refresh,
+  });
   State<FeedButton> createState() => _FeedButtonState();
 }
 
@@ -58,6 +63,7 @@ class _FeedButtonState extends State<FeedButton> {
                             var instance = SharedPref();
                             instance.save(
                                 rssNameController.text, rssUrlController.text);
+                            widget.refresh();
                             showDialog(
                                 context: context,
                                 builder: (context) {

@@ -41,7 +41,6 @@ class ShowSiteState extends State<ShowSite> {
           tiles.add(const Center(child: Text("没有订阅，点击左上角添加")));
         } else {
           for (var name in keyList2) {
-            String url = "url";
             tiles.add(ListTile(
               onTap: () {
                 Navigator.push(
@@ -58,7 +57,10 @@ class ShowSiteState extends State<ShowSite> {
                 Align(
                     alignment: const Alignment(1.0, 0.0),
                     child: OutlinedButton(
-                        onPressed: () => remove(name),
+                        onPressed: () {
+                          remove(name);
+                          setState(() {});
+                        },
                         child: const Icon(Icons.delete))),
               ]),
               // )
