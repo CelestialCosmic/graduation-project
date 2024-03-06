@@ -25,7 +25,7 @@ class Xml {
     a = FutureBuilder(
         future: sendrequest(),
         builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.data != null) {
+          if (!snapshot.data) {
             for (AtomItem item in snapshot.data.items) {
               list.add(ListTile(
                 title: Text(item.title.toString()),
@@ -36,7 +36,11 @@ class Xml {
               children: list,
             );
           } else {
-            return const Center(child:Row(children:[Text("loading..."),Icon(Icons.blur_circular_sharp)]));
+            return const Center(
+                child: Row(children: [
+              Text("loading..."),
+              Icon(Icons.blur_circular_sharp)
+            ]));
           }
         });
     return a;
