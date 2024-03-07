@@ -25,16 +25,20 @@ class MyAppState extends State<MyApp> {
             body: Center(
           child: Column(children: [
             AppBar(
-                backgroundColor: Color.fromARGB(255, 39, 191, 253),
-                title: Row(children: [
+                backgroundColor: const Color.fromARGB(255, 39, 191, 253),
+                title: Flexible(
+                    child: Row(children: [
                   FeedButton(
                     refresh: refreshState,
                   ),
                   const SizedBox(
                     width: 20,
                   ),
-                  const Text("网安2001 欧鑫奕"),
-                ])),
+                  const Text(
+                    "网安2001 欧鑫奕",
+                    overflow: TextOverflow.fade,
+                  ),
+                ]))),
             // OutlinedButton(onPressed: null, child: Text("全部内容")),
             // ignore: prefer_const_constructors
             ShowSite()

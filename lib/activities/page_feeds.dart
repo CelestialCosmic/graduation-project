@@ -73,7 +73,7 @@ class PageFrameState extends State<PageFrame> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 39, 191, 253),
+        backgroundColor: const Color.fromARGB(255, 39, 191, 253),
         title: Row(children: [
           Text(widget.name),
           const Spacer(
