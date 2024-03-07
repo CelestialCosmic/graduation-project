@@ -10,23 +10,23 @@ class ErrorLoading extends StatelessWidget {
   const ErrorLoading({super.key, required this.refresh});
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      const Spacer(
+    return const Column(children: [
+      Spacer(
         flex: 1,
       ),
       Center(
           child: Column(children: [
-        const Text("error"),
-        const SizedBox(
-          height: 10,
+        Text("fetch error"),
+        SizedBox(
+          height: 5,
         ),
-        OutlinedButton(
-            onPressed: () {
-              refresh;
-            },
-            child: const Text("refresh"))
+        Text("tap button to refresh"),
+        SizedBox(
+          height: 5,
+        ),
+        Text("or check whether the link is valid")
       ])),
-      const Spacer(
+      Spacer(
         flex: 1,
       ),
     ]);
@@ -90,7 +90,12 @@ class PageFrameState extends State<PageFrame> {
                       future: Resolver().sendrequest(snapshot.data.toString()),
                       builder: (context, AsyncSnapshot snapshot) {
                         List<Widget> tiles = [];
-                        if (!snapshot.hasData) {
+                        if (snapshot.connectionState == ConnectionState.done &&
+                            snapshot.hasData == false) {
+                          return ErrorLoading(
+                            refresh: refresh,
+                          );
+                        } else if (!snapshot.hasData) {
                           bool timeoutFlag = false;
                           Timer(const Duration(seconds: 5), () {
                             timeoutFlag = true;
