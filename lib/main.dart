@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'widgets/widget_subscript.dart';
 import 'activities/page_site.dart';
@@ -39,8 +41,6 @@ class MyAppState extends State<MyApp> {
                     overflow: TextOverflow.fade,
                   ),
                 ]))),
-            // OutlinedButton(onPressed: null, child: Text("全部内容")),
-            // ignore: prefer_const_constructors
             ShowSite()
           ]),
         )));
