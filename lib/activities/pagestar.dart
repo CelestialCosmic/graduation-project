@@ -34,7 +34,7 @@ class ShowFeedUrlsState extends State<ShowFeedUrls>
                 } else if (snapshot.connectionState == ConnectionState.done) {
                   return ListTile(
                     title: Row(children: [
-                      Padding(padding: EdgeInsets.fromLTRB(60, 0, 0, 0)),
+                      const Padding(padding: EdgeInsets.fromLTRB(60, 0, 0, 0)),
                       Text(name)
                     ]),
                     subtitle: Row(children: [
@@ -60,9 +60,7 @@ class ShowFeedUrlsState extends State<ShowFeedUrls>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    print(doneflag);
     tiles = _waitName();
-    print(tiles);
     return ListView(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,

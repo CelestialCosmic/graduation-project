@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -10,11 +12,16 @@ class FeedDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 39, 191, 253),
           title: Text(title),
         ),
         body: SingleChildScrollView(
             child: Column(children: [
-          Text(url),
+          Row(children: [
+            const SizedBox(width: 10),
+            Flexible(child: Text(url)),
+            const SizedBox(width: 10),
+          ]),
           const SizedBox(height: 10),
           Row(
             children: [

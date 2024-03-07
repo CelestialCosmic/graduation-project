@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterrss/activities/FeedReader.dart';
+import 'package:flutterrss/activities/feed_detail.dart';
 import 'package:flutterrss/widgets/feedResolver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -73,6 +73,7 @@ class PageFrameState extends State<PageFrame> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 39, 191, 253),
         title: Row(children: [
           Text(widget.name),
           const Spacer(
