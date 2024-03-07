@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
-
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -9,6 +8,7 @@ class FeedDetail extends StatelessWidget {
   final String url;
   FeedDetail(
       {super.key, required this.text, required this.title, required this.url});
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -17,9 +17,12 @@ class FeedDetail extends StatelessWidget {
         ),
         body: SingleChildScrollView(
             child: Column(children: [
-          Row(children: [
+          Row(mainAxisSize: MainAxisSize.min, children: [
             const SizedBox(width: 10),
-            Flexible(child: Text(url)),
+            Flexible(
+                child: Text(
+              url,
+            )),
             const SizedBox(width: 10),
           ]),
           const SizedBox(height: 10),

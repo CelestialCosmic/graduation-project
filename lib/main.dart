@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'widgets/addFeed.dart';
-import 'widgets/ShowSite.dart';
+import 'widgets/feed_button.dart';
+import 'activities/page_site.dart';
 
 void main() => runApp(const MyApp());
 

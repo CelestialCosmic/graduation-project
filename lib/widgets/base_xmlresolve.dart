@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './storage.dart';
-import './webrequest.dart';
+import 'base_storage.dart';
+import 'base_webrequest.dart';
 import 'package:dart_rss/dart_rss.dart';
 
 class Xml {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './storage.dart';
+import 'base_storage.dart';
 
 class FeedButton extends StatefulWidget {
   final Function() refresh;
@@ -7,6 +7,7 @@ class FeedButton extends StatefulWidget {
     super.key,
     required this.refresh,
   });
+  @override
   State<FeedButton> createState() => _FeedButtonState();
 }
 
@@ -81,6 +82,7 @@ class _FeedButtonState extends State<FeedButton> {
         });
   }
 
+  @override
   Widget build(BuildContext context) {
     return _addFeedButton(context);
   }

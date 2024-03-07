@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterrss/activities/feed_detail.dart';
-import 'package:flutterrss/widgets/feedResolver.dart';
+import 'package:flutterrss/activities/page_feed_detail.dart';
+import 'package:flutterrss/widgets/base_resolver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ErrorLoading extends StatelessWidget {
@@ -51,10 +51,10 @@ class Loading extends StatelessWidget {
   }
 }
 
-// 第二屏
 class PageFrame extends StatefulWidget {
   final String name;
   const PageFrame({super.key, required this.name});
+  @override
   State<PageFrame> createState() => PageFrameState();
 }
 
@@ -128,54 +128,67 @@ class PageFrameState extends State<PageFrame> {
                             } else {
                               authors = "no author";
                             }
-                            tiles.add(ListTile(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => FeedDetail(
-                                                text: article,
-                                                title: title,
-                                                url: url,
-                                              )));
-                                },
-                                title: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                            child: Text(
-                                          title,
-                                          overflow: TextOverflow.clip,
-                                          maxLines: 2,
-                                          softWrap: true,
-                                        )),
-                                        const SizedBox(
-                                          width: 10,
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                            child: Text(
-                                          authors,
-                                          overflow: TextOverflow.fade,
-                                          maxLines: 1,
-                                          softWrap: false,
-                                        )),
-                                        const SizedBox(width: 20),
-                                        Flexible(
-                                            child: Text(
-                                          a,
-                                          overflow: TextOverflow.visible,
-                                          maxLines: 1,
-                                          softWrap: false,
-                                        ))
-                                      ],
-                                    )
-                                  ],
-                                )));
+                            tiles.add(
+                              Card(
+                                  color: Colors.blueGrey,
+                                  child: ListTile(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    FeedDetail(
+                                                      text: article,
+                                                      title: title,
+                                                      url: url,
+                                                    )));
+                                      },
+                                      title: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Flexible(
+                                                  child: Text(
+                                                title,
+                                                overflow: TextOverflow.clip,
+                                                maxLines: 2,
+                                                softWrap: true,
+                                              )),
+                                              const SizedBox(
+                                                width: 10,
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Flexible(
+                                                  child: Text(
+                                                authors,
+                                                style: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(0.6),
+                                                    fontSize: 12),
+                                                overflow: TextOverflow.fade,
+                                                maxLines: 1,
+                                                softWrap: false,
+                                              )),
+                                              const SizedBox(width: 20),
+                                              Flexible(
+                                                  child: Text(
+                                                a,
+                                                style: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(0.6),
+                                                    fontSize: 12),
+                                                overflow: TextOverflow.visible,
+                                                maxLines: 1,
+                                                softWrap: false,
+                                              ))
+                                            ],
+                                          )
+                                        ],
+                                      ))),
+                            );
                           }
                           return ListView(children: tiles);
                         }

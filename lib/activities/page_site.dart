@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ShowSite extends StatefulWidget {
   const ShowSite({super.key});
+  @override
   State<ShowSite> createState() => ShowSiteState();
 }
 
@@ -21,6 +22,7 @@ class ShowSiteState extends State<ShowSite> {
     prefs.remove(name);
   }
 
+  @override
   Widget build(BuildContext context) {
     List<String> names = [];
     List<Widget> tiles = [];
@@ -43,29 +45,31 @@ class ShowSiteState extends State<ShowSite> {
                   Text("no subscription,tap button on top-left to add one")));
         } else {
           for (var name in keyList2) {
-            tiles.add(ListTile(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PageFrame(
-                        name: name,
-                      ),
-                    ));
-              },
-              title: Row(children: [
-                Text(name),
-                const Spacer(),
-                Align(
-                    alignment: const Alignment(1.0, 0.0),
-                    child: OutlinedButton(
-                        onPressed: () {
-                          remove(name);
-                          setState(() {});
-                        },
-                        child: const Icon(Icons.delete))),
-              ]),
-            ));
+            tiles.add(Card(
+                color: const Color.fromARGB(255, 58, 143, 183),
+                child: ListTile(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PageFrame(
+                            name: name,
+                          ),
+                        ));
+                  },
+                  title: Row(children: [
+                    Text(name),
+                    const Spacer(),
+                    Align(
+                        alignment: const Alignment(1.0, 0.0),
+                        child: OutlinedButton(
+                            onPressed: () {
+                              remove(name);
+                              setState(() {});
+                            },
+                            child: const Icon(Icons.delete))),
+                  ]),
+                )));
           }
         }
         return Column(

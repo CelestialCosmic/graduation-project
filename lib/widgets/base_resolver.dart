@@ -9,7 +9,6 @@ class Network {
     if (response.statusCode == HttpStatus.ok) {
       return response.data;
     } else {
-      print("${response.statusCode}");
       return "";
     }
   }
