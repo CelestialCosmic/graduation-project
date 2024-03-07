@@ -59,6 +59,7 @@ class ShowFeedUrlsState extends State<ShowFeedUrls>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     print(doneflag);
     tiles = _waitName();
     print(tiles);

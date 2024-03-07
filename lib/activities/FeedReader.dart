@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class FeedDetail extends StatelessWidget {
   final String text;
@@ -11,20 +12,19 @@ class FeedDetail extends StatelessWidget {
         appBar: AppBar(
           title: Text(title),
         ),
-        body: Column(children: [
+        body: SingleChildScrollView(
+            child: Column(children: [
           Text(url),
           const SizedBox(height: 10),
           Row(
             children: [
               const SizedBox(width: 20),
               Flexible(
-                  child: Text(
-                text,
-                softWrap: true,
-              )),
+                child: Html(data: text),
+              ),
               const SizedBox(width: 20)
             ],
           )
-        ]));
+        ])));
   }
 }

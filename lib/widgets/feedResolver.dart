@@ -1,4 +1,3 @@
-import 'package:http/http.dart' as http;
 import 'package:dart_rss/dart_rss.dart';
 import 'dart:io';
 import 'package:dio/dio.dart';
@@ -21,7 +20,6 @@ class Resolver {
     final neet = Network();
     var rawxml = await neet.get(url);
     AtomFeed feed = AtomFeed.parse(rawxml);
-    print(feed);
     return feed;
   }
 }

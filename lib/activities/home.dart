@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class FeedArticle extends StatelessWidget {
   var feedImgurl = "no icon";
   var feedTitle = "default title";
   var feedSubtitle = "default subtitle";
-  Widget build(BuildContext context){
+
+  FeedArticle({super.key});
+  Widget build(BuildContext context) {
     return ListView(
-      children:<Widget> [
-          ListTile(
-            leading: Image.network(feedImgurl),
-            title: Text(feedTitle),
-            subtitle: Text(feedSubtitle),
-          )
-        ],
+      children: <Widget>[
+        ListTile(
+          leading: Image.network(feedImgurl),
+          title: Text(feedTitle),
+          subtitle: Text(feedSubtitle),
+        )
+      ],
     );
   }
 }
@@ -27,7 +30,7 @@ class NewsBlock extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(20)),
               color: Color.fromARGB(255, 233, 33, 33)),
           padding: const EdgeInsets.all(5),
-          margin: const EdgeInsets.fromLTRB(5,10,5,0),
+          margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
           height: 120,
           child: Column(children: [
             const Expanded(

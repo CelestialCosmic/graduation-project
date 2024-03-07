@@ -14,7 +14,6 @@ class Xml {
     final neet = Network();
     var rawxml = await neet.get(url);
     AtomFeed feed = AtomFeed.parse(rawxml);
-    print(feed);
     return feed;
   }
 
