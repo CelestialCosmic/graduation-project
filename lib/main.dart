@@ -28,19 +28,19 @@ class MyAppState extends State<MyApp> {
           child: Column(children: [
             AppBar(
                 backgroundColor: const Color.fromARGB(255, 39, 191, 253),
-                title: Flexible(
-                    child: Row(children: [
+                title: Row(children: [
                   FeedButton(
                     refresh: refreshState,
                   ),
                   const SizedBox(
                     width: 20,
                   ),
-                  const Text(
+                  const Flexible(
+                      child: Text(
                     "网安2001 欧鑫奕",
                     overflow: TextOverflow.fade,
-                  ),
-                ]))),
+                  )),
+                ])),
             ShowSite()
           ]),
         )));

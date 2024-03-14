@@ -10,6 +10,7 @@ class ShowSite extends StatefulWidget {
 }
 
 class ShowSiteState extends State<ShowSite> {
+  final ScrollController _controller = ScrollController();
   List<Widget> tiles = [];
   keys() async {
     final prefs = await SharedPreferences.getInstance();
@@ -58,7 +59,9 @@ class ShowSiteState extends State<ShowSite> {
                         ));
                   },
                   title: Row(children: [
-                    Text(name),
+                    Expanded(
+                      child: Text(name),
+                    ),
                     const Spacer(),
                     Align(
                         alignment: const Alignment(1.0, 0.0),
@@ -72,7 +75,9 @@ class ShowSiteState extends State<ShowSite> {
                 )));
           }
         }
-        return Column(
+        return ListView(
+          controller: _controller,
+          shrinkWrap: true,
           children: tiles,
         );
       },
