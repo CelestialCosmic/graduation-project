@@ -3,6 +3,14 @@ import 'package:flutterrss/activities/page_feeds.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
+class NoSubscriptionWarning extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+        child: Text("no subscription,tap button on top-left to add one"));
+  }
+}
+
 class ShowSite extends StatefulWidget {
   const ShowSite({super.key});
   @override
@@ -10,12 +18,11 @@ class ShowSite extends StatefulWidget {
 }
 
 class ShowSiteState extends State<ShowSite> {
-  final ScrollController _controller = ScrollController();
   List<Widget> tiles = [];
   keys() async {
     final prefs = await SharedPreferences.getInstance();
-    List<String> keys = prefs.getKeys().toList();
-    return keys;
+    List<String> key = prefs.getKeys().toList();
+    return key;
   }
 
   remove(name) async {
@@ -35,51 +42,47 @@ class ShowSiteState extends State<ShowSite> {
     return FutureBuilder(
       future: keys(),
       builder: (context, snapshot) {
-        String keyListmid = jsonEncode(snapshot.data.toString());
-        var keyList =
-            keyListmid.substring(2, keyListmid.length - 2).replaceAll(" ", "");
-        var keyList2 = (keyList.split(','));
-        List<Widget> tiles = [];
-        if (keyList2.toString() == "[]") {
-          tiles.add(const Center(
-              child:
-                  Text("no subscription,tap button on top-left to add one")));
+        if (!snapshot.hasData) {
+          return NoSubscriptionWarning();
         } else {
-          for (var name in keyList2) {
-            tiles.add(Card(
-                color: const Color.fromARGB(255, 58, 143, 183),
-                child: ListTile(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PageFrame(
-                            name: name,
-                          ),
-                        ));
-                  },
-                  title: Row(children: [
-                    Expanded(
-                      child: Text(name),
-                    ),
-                    const Spacer(),
-                    Align(
-                        alignment: const Alignment(1.0, 0.0),
-                        child: OutlinedButton(
-                            onPressed: () {
-                              remove(name);
-                              setState(() {});
-                            },
-                            child: const Icon(Icons.delete))),
-                  ]),
-                )));
-          }
+          String keyListmid = jsonEncode(snapshot.data.toString());
+          var keyList = keyListmid
+              .substring(2, keyListmid.length - 2)
+              .replaceAll(" ", "");
+          var keyList2 = (keyList.split(','));
+          return ListView.builder(
+              itemCount: keyList2.length,
+              itemBuilder: (context, index) {
+                String name = keyList2[index];
+                return Card(
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PageFrame(
+                                  name: name,
+                                ),
+                              ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(children: [
+                            Expanded(
+                              child: Text(name),
+                            ),
+                            Align(
+                                alignment: const Alignment(1.0, 0.0),
+                                child: OutlinedButton(
+                                    onPressed: () {
+                                      remove(name);
+                                      setState(() {});
+                                    },
+                                    child: const Icon(Icons.delete))),
+                          ]),
+                        )));
+              });
         }
-        return ListView(
-          controller: _controller,
-          shrinkWrap: true,
-          children: tiles,
-        );
       },
     );
   }

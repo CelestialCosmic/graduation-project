@@ -10,26 +10,17 @@ class ErrorLoading extends StatelessWidget {
   const ErrorLoading({super.key, required this.refresh});
   @override
   Widget build(BuildContext context) {
-    return const Column(children: [
-      Spacer(
-        flex: 1,
-      ),
-      Center(
+    return const Center(
+        child: Column(children: [
+      Spacer(flex: 1),
+      Card(
           child: Column(children: [
         Text("fetch error"),
-        SizedBox(
-          height: 5,
-        ),
         Text("tap button to refresh"),
-        SizedBox(
-          height: 5,
-        ),
-        Text("or check whether the link is valid")
+        Text("or check whether the link is valid"),
       ])),
-      Spacer(
-        flex: 1,
-      ),
-    ]);
+      Spacer(flex: 1),
+    ]));
   }
 }
 
@@ -37,17 +28,21 @@ class Loading extends StatelessWidget {
   const Loading({super.key});
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        Spacer(
-          flex: 1,
-        ),
-        Text("fetching data"),
-        Spacer(
-          flex: 1,
-        )
-      ],
-    );
+    return const Center(
+        child: Card(
+            child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Text("fetching data"),
+                    Spacer(
+                      flex: 1,
+                    )
+                  ],
+                ))));
   }
 }
 

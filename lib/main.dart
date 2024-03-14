@@ -22,27 +22,24 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(fontFamily: 'notosans'),
-        home: Scaffold(
-            body: Center(
-          child: Column(children: [
-            AppBar(
-                backgroundColor: const Color.fromARGB(255, 39, 191, 253),
-                title: Row(children: [
-                  FeedButton(
+      theme: ThemeData(fontFamily: 'notosans'),
+      home: Scaffold(
+          appBar: AppBar(
+              backgroundColor: const Color.fromARGB(255, 39, 191, 253),
+              title: Row(children: [
+                const Expanded(
+                    child: Text(
+                  "网安2001 欧鑫奕",
+                  overflow: TextOverflow.fade,
+                )),
+                Align(
+                  alignment: const Alignment(1.0, 0.0),
+                  child: FeedButton(
                     refresh: refreshState,
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  const Flexible(
-                      child: Text(
-                    "网安2001 欧鑫奕",
-                    overflow: TextOverflow.fade,
-                  )),
-                ])),
-            ShowSite()
-          ]),
-        )));
+                ),
+              ])),
+          body: ShowSite()),
+    );
   }
 }
