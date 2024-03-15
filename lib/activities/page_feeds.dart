@@ -14,11 +14,13 @@ class ErrorLoading extends StatelessWidget {
         child: Column(children: [
       Spacer(flex: 1),
       Card(
-          child: Column(children: [
-        Text("fetch error"),
-        Text("tap button to refresh"),
-        Text("or check whether the link is valid"),
-      ])),
+          child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(children: [
+                Text("fetch error"),
+                Text("tap button to refresh"),
+                Text("or check whether the link is valid"),
+              ]))),
       Spacer(flex: 1),
     ]));
   }
@@ -29,20 +31,25 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-        child: Card(
+        child: Column(
+      children: [
+        Spacer(
+          flex: 1,
+        ),
+        Card(
             child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Spacer(
-                      flex: 1,
-                    ),
-                    Text("fetching data"),
-                    Spacer(
-                      flex: 1,
-                    )
-                  ],
-                ))));
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Text("fetching data"),
+            ],
+          ),
+        )),
+        Spacer(
+          flex: 1,
+        ),
+      ],
+    ));
   }
 }
 
