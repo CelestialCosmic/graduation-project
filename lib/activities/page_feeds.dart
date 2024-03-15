@@ -14,6 +14,7 @@ class ErrorLoading extends StatelessWidget {
         child: Column(children: [
       Spacer(flex: 1),
       Card(
+          color: Color.fromARGB(255, 209, 231, 254),
           child: Padding(
               padding: EdgeInsets.all(10),
               child: Column(children: [
@@ -37,19 +38,91 @@ class Loading extends StatelessWidget {
           flex: 1,
         ),
         Card(
+            color: Color.fromARGB(255, 209, 231, 254),
             child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Text("fetching data"),
-            ],
-          ),
-        )),
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Text("fetching data"),
+                ],
+              ),
+            )),
         Spacer(
           flex: 1,
         ),
       ],
     ));
+  }
+}
+
+class FeedCard extends StatelessWidget {
+  final String text;
+  final String title;
+  final String url;
+  final String time;
+  final String authors;
+  FeedCard(
+      {super.key,
+      required this.text,
+      required this.title,
+      required this.url,
+      required this.time,
+      required this.authors});
+  Widget build(BuildContext context) {
+    return Card(
+        color: const Color.fromARGB(255, 209, 231, 254),
+        child: ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FeedDetail(
+                            text: text,
+                            title: title,
+                            url: url,
+                          )));
+            },
+            title: Column(
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                        child: Text(
+                      title,
+                      overflow: TextOverflow.clip,
+                      maxLines: 2,
+                      softWrap: true,
+                    )),
+                    const SizedBox(
+                      width: 10,
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Flexible(
+                        child: Text(
+                      authors,
+                      style: TextStyle(
+                          color: Colors.black.withOpacity(0.6), fontSize: 12),
+                      overflow: TextOverflow.fade,
+                      maxLines: 1,
+                      softWrap: false,
+                    )),
+                    const SizedBox(width: 20),
+                    Flexible(
+                        child: Text(
+                      time,
+                      style: TextStyle(
+                          color: Colors.black.withOpacity(0.6), fontSize: 12),
+                      overflow: TextOverflow.visible,
+                      maxLines: 1,
+                      softWrap: false,
+                    ))
+                  ],
+                )
+              ],
+            )));
   }
 }
 
@@ -74,8 +147,9 @@ class PageFrameState extends State<PageFrame> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 231, 249, 244),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 39, 191, 253),
+        backgroundColor: const Color.fromARGB(255, 196, 208, 251),
         title: Row(children: [
           Text(widget.name),
           const Spacer(
@@ -100,7 +174,7 @@ class PageFrameState extends State<PageFrame> {
                           );
                         } else if (!snapshot.hasData) {
                           bool timeoutFlag = false;
-                          Timer(const Duration(seconds: 5), () {
+                          Timer(const Duration(seconds: 20), () {
                             timeoutFlag = true;
                           });
                           if (timeoutFlag == false) {
@@ -111,89 +185,37 @@ class PageFrameState extends State<PageFrame> {
                             );
                           }
                         } else {
-                          for (AtomItem item in snapshot.data.items) {
-                            String authors = "";
-                            String url = "";
-                            String title = "";
-                            String a = item.updated.toString();
-                            String article = "";
-                            article = item.content.toString();
-                            if (article == "null") {
-                              article = item.summary.toString();
-                            }
-                            title = item.title.toString();
-                            url = item.links.first.href.toString();
-                            if (item.authors.isNotEmpty) {
-                              for (var author in item.authors) {
-                                authors = "${author.name} ";
-                              }
-                            } else {
-                              authors = "no author";
-                            }
-                            tiles.add(
-                              Card(
-                                  color: Colors.blueGrey,
-                                  child: ListTile(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    FeedDetail(
-                                                      text: article,
-                                                      title: title,
-                                                      url: url,
-                                                    )));
-                                      },
-                                      title: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Flexible(
-                                                  child: Text(
-                                                title,
-                                                overflow: TextOverflow.clip,
-                                                maxLines: 2,
-                                                softWrap: true,
-                                              )),
-                                              const SizedBox(
-                                                width: 10,
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Flexible(
-                                                  child: Text(
-                                                authors,
-                                                style: TextStyle(
-                                                    color: Colors.black
-                                                        .withOpacity(0.6),
-                                                    fontSize: 12),
-                                                overflow: TextOverflow.fade,
-                                                maxLines: 1,
-                                                softWrap: false,
-                                              )),
-                                              const SizedBox(width: 20),
-                                              Flexible(
-                                                  child: Text(
-                                                a,
-                                                style: TextStyle(
-                                                    color: Colors.black
-                                                        .withOpacity(0.6),
-                                                    fontSize: 12),
-                                                overflow: TextOverflow.visible,
-                                                maxLines: 1,
-                                                softWrap: false,
-                                              ))
-                                            ],
-                                          )
-                                        ],
-                                      ))),
+                          String time = "";
+                          String authors = "";
+                          String url = "";
+                          String title = "";
+                          String text = "";
+                          if (snapshot.data.runtimeType == RssFeed)
+                            // for (AtomItem item in snapshot.data.items) {
+                            //   String time = item.updated.toString();
+                            //   article = item.content.toString();
+                            //   if (article == "null") {
+                            //     article = item.summary.toString();
+                            //   }
+                            //   title = item.title.toString();
+                            //   url = item.links.first.href.toString();
+                            //   if (item.authors.isNotEmpty) {
+                            //     for (var author in item.authors) {
+                            //       authors = "${author.name} ";
+                            //     }
+                            //   } else {
+                            //     authors = "no author";
+                            //   }
+                            // }
+                            return FeedCard(
+                              text: text,
+                              title: title,
+                              url: url,
+                              time: time,
+                              authors: authors,
                             );
-                          }
-                          return ListView(children: tiles);
                         }
+                        return ListView(children: tiles);
                       });
                 }
               })),

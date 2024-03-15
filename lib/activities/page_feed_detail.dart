@@ -11,8 +11,9 @@ class FeedDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color.fromARGB(255, 231, 249, 244),
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 39, 191, 253),
+          backgroundColor: const Color.fromARGB(255, 196, 208, 251),
           title: Text(title),
         ),
         body: SingleChildScrollView(

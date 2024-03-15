@@ -55,6 +55,7 @@ class ShowSiteState extends State<ShowSite> {
               itemBuilder: (context, index) {
                 String name = keyList2[index];
                 return Card(
+                    color: const Color.fromARGB(255, 209, 231, 254),
                     child: InkWell(
                         onTap: () {
                           Navigator.push(
