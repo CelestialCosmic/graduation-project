@@ -1,5 +1,4 @@
 import 'package:dart_rss/dart_rss.dart';
-import 'package:dart_rss/domain/rss1_feed.dart';
 import 'dart:io';
 import 'package:dio/dio.dart';
 
@@ -26,7 +25,5 @@ class Resolver {
       feed = AtomFeed.parse(rawxml);
     }
     return feed;
-    // print(feed2.items.isEmpty.toString() + "a1");
-    // print(feed.items.isEmpty.toString() + "a2");
   }
 }

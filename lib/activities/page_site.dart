@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NoSubscriptionWarning extends StatelessWidget {
+  const NoSubscriptionWarning({super.key});
   @override
   Widget build(BuildContext context) {
     return const Center(
@@ -43,7 +44,7 @@ class ShowSiteState extends State<ShowSite> {
       future: keys(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return NoSubscriptionWarning();
+          return const NoSubscriptionWarning();
         } else {
           String keyListmid = jsonEncode(snapshot.data.toString());
           var keyList = keyListmid

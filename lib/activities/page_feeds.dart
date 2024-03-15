@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutterrss/activities/page_feed_detail.dart';
 import 'package:flutterrss/widgets/base_resolver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:charset_converter';
 
 class ErrorLoading extends StatelessWidget {
   final Function() refresh;
@@ -61,13 +63,14 @@ class FeedCard extends StatelessWidget {
   final String url;
   final String time;
   final String authors;
-  FeedCard(
+  const FeedCard(
       {super.key,
       required this.text,
       required this.title,
       required this.url,
       required this.time,
       required this.authors});
+  @override
   Widget build(BuildContext context) {
     return Card(
         color: const Color.fromARGB(255, 209, 231, 254),
@@ -144,6 +147,13 @@ class PageFrameState extends State<PageFrame> {
     setState(() {});
   }
 
+  utf8Convert(txt) {
+    Utf8Decoder decode = const Utf8Decoder();
+    String converted = jsonDecode(decode.convert(txt));
+    print(converted);
+    return converted;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -190,30 +200,72 @@ class PageFrameState extends State<PageFrame> {
                           String url = "";
                           String title = "";
                           String text = "";
-                          if (snapshot.data.runtimeType == RssFeed)
-                            // for (AtomItem item in snapshot.data.items) {
-                            //   String time = item.updated.toString();
-                            //   article = item.content.toString();
-                            //   if (article == "null") {
-                            //     article = item.summary.toString();
-                            //   }
-                            //   title = item.title.toString();
-                            //   url = item.links.first.href.toString();
-                            //   if (item.authors.isNotEmpty) {
-                            //     for (var author in item.authors) {
-                            //       authors = "${author.name} ";
-                            //     }
-                            //   } else {
-                            //     authors = "no author";
-                            //   }
-                            // }
-                            return FeedCard(
-                              text: text,
-                              title: title,
-                              url: url,
-                              time: time,
-                              authors: authors,
-                            );
+                          Object items = snapshot.data;
+                          if (items.runtimeType == RssFeed) {
+                            RssFeed items = snapshot.data;
+                            return ListView.builder(
+                                itemCount: items.items.length,
+                                itemBuilder: (context, index) {
+                                  RssItem item = items.items[index];
+                                  text =
+                                      utf8Convert(item.description.toString());
+                                  title = item.title.toString();
+                                  url = item.link.toString();
+                                  time = item.pubDate.toString();
+                                  authors = item.author.toString();
+                                  return FeedCard(
+                                    text: text,
+                                    title: title,
+                                    url: url,
+                                    time: time,
+                                    authors: authors,
+                                  );
+                                });
+                          } else if (items.runtimeType == AtomFeed) {
+                            AtomFeed items = snapshot.data;
+                            return ListView.builder(
+                                itemCount: items.items.length,
+                                itemBuilder: (context, index) {
+                                  AtomItem item = items.items[index];
+                                  text = item.summary.toString();
+                                  if (text == "null") {
+                                    text = item.content.toString();
+                                  }
+                                  title = item.title.toString();
+                                  url = item.links.first.href.toString();
+                                  time = item.updated.toString();
+                                  if (item.authors.isNotEmpty) {
+                                    for (var author in item.authors) {
+                                      authors = "${author.name} ";
+                                    }
+                                  } else {
+                                    authors = "no author";
+                                  }
+                                  return FeedCard(
+                                    text: text,
+                                    title: title,
+                                    url: url,
+                                    time: time,
+                                    authors: authors,
+                                  );
+                                });
+                          }
+                          // for (AtomItem item in snapshot.data.items) {
+                          //   String time = item.updated.toString();
+                          //   article = item.content.toString();
+                          //   if (article == "null") {
+                          //     article = item.summary.toString();
+                          //   }
+                          //   title = item.title.toString();
+                          //   url = item.links.first.href.toString();
+                          //   if (item.authors.isNotEmpty) {
+                          //     for (var author in item.authors) {
+                          //       authors = "${author.name} ";
+                          //     }
+                          //   } else {
+                          //     authors = "no author";
+                          //   }
+                          // }
                         }
                         return ListView(children: tiles);
                       });
