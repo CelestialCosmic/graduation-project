@@ -5,7 +5,6 @@ import 'package:flutterrss/activities/page_feed_detail.dart';
 import 'package:flutterrss/widgets/base_resolver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:charset_converter';
 
 class ErrorLoading extends StatelessWidget {
   final Function() refresh;
@@ -207,8 +206,7 @@ class PageFrameState extends State<PageFrame> {
                                 itemCount: items.items.length,
                                 itemBuilder: (context, index) {
                                   RssItem item = items.items[index];
-                                  text =
-                                      utf8Convert(item.description.toString());
+                                  text = item.description.toString();
                                   title = item.title.toString();
                                   url = item.link.toString();
                                   time = item.pubDate.toString();

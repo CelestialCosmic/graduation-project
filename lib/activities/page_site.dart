@@ -8,7 +8,15 @@ class NoSubscriptionWarning extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-        child: Text("no subscription,tap button on top-left to add one"));
+        child: Column(children: [
+      Spacer(flex: 1),
+      Card(
+          color: Color.fromARGB(255, 209, 231, 254),
+          child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Text("no subscription,tap button to subscribe"))),
+      Spacer(flex: 1),
+    ]));
   }
 }
 
@@ -43,7 +51,7 @@ class ShowSiteState extends State<ShowSite> {
     return FutureBuilder(
       future: keys(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+        if (snapshot.data.toString() == "[]") {
           return const NoSubscriptionWarning();
         } else {
           String keyListmid = jsonEncode(snapshot.data.toString());
