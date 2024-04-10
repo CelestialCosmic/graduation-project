@@ -28,7 +28,7 @@ class FeedDetail extends StatelessWidget {
             child: Column(children: [
           Row(mainAxisSize: MainAxisSize.min, children: [
             const SizedBox(width: 10),
-            Card(
+            Flexible(child:Card(
                 child: InkWell(
                     onTap: () {
                       showDialog(
@@ -88,7 +88,11 @@ class FeedDetail extends StatelessWidget {
                           });
                     },
                     child: Padding(
-                        padding: const EdgeInsets.all(10), child: Text(url)))),
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          url,
+                          overflow: TextOverflow.fade,
+                        ))))),
             const SizedBox(width: 10),
           ]),
           Row(
