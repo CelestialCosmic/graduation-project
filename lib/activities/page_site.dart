@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutterrss/activities/page_feeds.dart';
-import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NoSubscriptionWarning extends StatelessWidget {
@@ -54,15 +53,11 @@ class ShowSiteState extends State<ShowSite> {
         if (snapshot.data.toString() == "[]") {
           return const NoSubscriptionWarning();
         } else {
-          String keyListmid = jsonEncode(snapshot.data.toString());
-          var keyList = keyListmid
-              .substring(2, keyListmid.length - 2)
-              .replaceAll(" ", "");
-          var keyList2 = (keyList.split(','));
+          final data = snapshot.data as List<String>;
           return ListView.builder(
-              itemCount: keyList2.length,
+              itemCount: data.length,
               itemBuilder: (context, index) {
-                String name = keyList2[index];
+                String name = data[index];
                 return Card(
                     color: const Color.fromARGB(255, 209, 231, 254),
                     child: InkWell(

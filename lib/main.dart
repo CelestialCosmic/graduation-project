@@ -5,7 +5,6 @@ import 'widgets/widget_subscript.dart';
 import 'activities/page_site.dart';
 
 void main() => runApp(const MyApp());
-
 // 淡蓝 const Color.fromARGB(255, 209, 231, 254)
 // 淡紫 const Color.fromARGB(255, 243, 217, 255)
 // 浅蓝 const Color.fromARGB(255, 196, 208, 251)
