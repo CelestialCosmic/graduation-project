@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
-
+// 这是已过期的项目
+// Upgrading Flutter to 3.27.3 from 3.16.9 in C:\Apps\flutter...
 import 'package:flutter/material.dart';
 import 'widgets/widget_subscript.dart';
 import 'activities/page_site.dart';
@@ -36,7 +37,7 @@ class MyAppState extends State<MyApp> {
               title: Row(children: [
                 const Expanded(
                     child: Text(
-                  "网安2001 欧鑫奕",
+                  "flutter RSS",
                   overflow: TextOverflow.fade,
                 )),
                 Align(
